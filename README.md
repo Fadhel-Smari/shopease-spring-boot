@@ -36,6 +36,8 @@ ShopEase est une plateforme e-commerce moderne développée avec des technologie
 └── README.md        # Documentation du projet
 ```
 
+---
+
 ## ⚙️ Étapes réalisées
 
 ### 1. Initialisation du projet backend
@@ -53,4 +55,32 @@ ShopEase est une plateforme e-commerce moderne développée avec des technologie
 - Initialisation Git
 - Ajout du projet Spring Boot dans le dossier `backend/`
 - Premier commit et push vers GitHub
+
+---
+
+## 🧱 Structure du backend (Spring Boot)
+
+L'application suit une architecture modulaire organisée selon les bonnes pratiques de développement backend Java avec Spring Boot.
+
+```bash
+backend/
+└── src/
+    └── main/
+        ├── java/
+        │   └── com/
+        │       └── shopease/
+        │           ├── config/          # Configurations (sécurité, CORS, JWT, etc.)
+        │           ├── controller/      # Contrôleurs REST
+        │           ├── dto/             # Objets de transfert de données (DTO)
+        │           ├── entity/          # Entités JPA (modèles de base de données)
+        │           ├── exception/       # Gestion des exceptions personnalisées
+        │           ├── repository/      # Interfaces d'accès aux données (JpaRepository)
+        │           ├── security/        # Gestion de la sécurité (JWT, filtres, etc.)
+        │           ├── service/         # Logique métier
+        │           └── ShopEaseApplication.java  # Classe principale
+        └── resources/
+            ├── application.properties  # Configuration de l'application (base de données, port, etc.)
+            ├── static/                 # (Optionnel) Fichiers statiques
+            └── templates/              # (Optionnel) Vues si utilisation de Thymeleaf
+```
 
