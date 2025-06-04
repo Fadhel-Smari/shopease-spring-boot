@@ -1,8 +1,4 @@
-# shopease-spring-boot
-
-# ShopEase Plateforme e-commerce fullstack Java Spring Boot + React
-
-# 🛍️ ShopEase - Plateforme E-Commerce Fullstack
+# 🛍️ ShopEase Plateforme e-commerce fullstack Java Spring Boot + React
 
 ShopEase est une plateforme e-commerce moderne développée avec des technologies backend robustes telles que **Java**, **Spring Boot**, **Spring Security**, **Hibernate**, et **PostgreSQL**. Ce projet a pour but de créer une application complète de vente en ligne avec des fonctionnalités avancées côté client et administrateur.
 
@@ -83,4 +79,60 @@ backend/
             ├── static/                 # (Optionnel) Fichiers statiques
             └── templates/              # (Optionnel) Vues si utilisation de Thymeleaf
 ```
+
+---
+
+## 🗄️ Configuration de la base de données PostgreSQL
+
+L'application utilise PostgreSQL comme système de gestion de base de données relationnelle.
+
+### 🧱 Étape 1 : Installation de PostgreSQL (Ubuntu)
+
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+```
+---
+
+### ▶️ Étape 2 : Lancer et vérifier PostgreSQL
+
+```bash
+sudo systemctl status postgresql
+sudo systemctl start postgresql  # (si nécessaire)
+```
+### 🧑‍💻 Étape 3 : Création de la base de données et de l'utilisateur
+
+```bash
+sudo -i -u postgres
+psql
+```
+Dans le shell psql :
+```sql
+CREATE DATABASE shopease_db;
+CREATE USER admin WITH PASSWORD 'admin';
+GRANT ALL PRIVILEGES ON DATABASE shopease_db TO admin;
+\q
+exit
+
+```
+
+### ⚙️ Étape 4 : Configuration dans application.properties
+
+# Port du serveur
+server.port=8080
+
+# Configuration PostgreSQL
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/shopease_db
+spring.datasource.username=admin
+spring.datasource.password=admin
+```
+# Configuration Hibernate
+```properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+```
+---
+✅ Cette configuration permet à l'application Spring Boot de se connecter à la base shopease_db avec l'utilisateur admin.
 
