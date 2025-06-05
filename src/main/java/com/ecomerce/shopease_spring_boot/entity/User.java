@@ -1,5 +1,6 @@
 package com.ecomerce.shopease_spring_boot.entity;
 
+import com.ecomerce.shopease_spring_boot.enums.Role;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,9 @@ public class User {
 
     @Column(nullable = false)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     // Getters et Setters
 
@@ -51,6 +55,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
 

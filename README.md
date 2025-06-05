@@ -298,3 +298,46 @@ POST /api/products
 ---
 
 ✅ Cette étape permet désormais d’organiser les produits par catégorie dans la base de données shopease_db.
+
+---
+
+## 🔐 Module d’authentification (début)
+
+Ce module permet la gestion des utilisateurs avec rôles (CLIENT ou ADMIN), l’inscription, la connexion, et la future génération de **JWT** pour sécuriser les accès aux API.
+
+### ⚙️ Dépendances ajoutées dans `pom.xml`
+
+- JSON Web Token (JJWT) :
+* jjwt-api
+* jjwt-impl
+* jjwt-jackson
+
+### 🧱 Étapes réalisées
+
+#### 🔸 1. Ajout du rôle utilisateur
+
+- Création d’un fichier `Role.java` dans le package `enums` :
+  
+```java
+public enum Role {
+    ADMIN,
+    CLIENT
+}
+```
+- Ajout d’un champ role dans l’entité User :
+
+```java
+@Enumerated(EnumType.STRING)
+private Role role;
+```
+
+#### 🔸 2. Création des classes DTO pour la gestion d'authentification
+Dans un package dto :
+
+- RegisterRequest.java : contient username, password, role
+
+- LoginRequest.java : contient username, password
+
+- AuthResponse.java : contient un champ token (JWT)
+
+✅ Ces classes permettent de structurer les requêtes et réponses pour les endpoints /register et /login.
