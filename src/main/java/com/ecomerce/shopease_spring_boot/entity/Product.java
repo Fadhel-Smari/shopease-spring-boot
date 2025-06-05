@@ -25,6 +25,10 @@ public class Product {
     @Column(nullable = false)
     private int stock;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     // Getters & Setters
 
     public Long getId() {
@@ -74,5 +78,14 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
 }
 
