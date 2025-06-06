@@ -363,3 +363,25 @@ Cette étape met en place le cœur du système d’authentification basé sur **
   - **Connexion** : vérifie le mot de passe, retourne un JWT
 - Utilise `PasswordEncoder` pour encoder les mots de passe
 - Retourne un objet `AuthResponse` contenant le JWT
+
+---
+
+#### 🔸 4. Création de controlleur AuthController
+
+Exposer les endpoints HTTP permettant aux clients de s’inscrire ou de se connecter à la plateforme **ShopEase**. Ces opérations utilisent le service `AuthService` et retournent un **token JWT** en réponse.
+
+### 🌐 Composant ajouté
+
+#### ✅ `AuthController.java`
+- Contrôleur REST accessible via `/api/auth`
+- Deux endpoints disponibles :
+
+| Méthode | URL               | Description            |
+|---------|-------------------|------------------------|
+| POST    | `/register`       | Inscription d’un utilisateur |
+| POST    | `/login`          | Authentification d’un utilisateur |
+
+- Chaque requête utilise un DTO (`RegisterRequest` ou `LoginRequest`) et retourne un `AuthResponse` contenant le **JWT**
+
+- Annotation `@CrossOrigin` ajoutée pour permettre les appels depuis le frontend React
+
