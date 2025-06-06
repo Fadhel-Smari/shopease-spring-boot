@@ -405,4 +405,33 @@ Configurer la sécurité de l’application pour :
 - Fournit un bean `PasswordEncoder` pour encoder les mots de passe
 - Fournit un bean `AuthenticationManager` nécessaire pour l’authentification dans le service
 
+---
+
+#### 🔸 5. Création du filtre JWT
+
+Ajouter un filtre personnalisé pour :
+- Intercepter chaque requête HTTP
+- Vérifier la présence d’un token JWT valide dans le header `Authorization`
+- Extraire le nom d'utilisateur (email) du token
+- Charger l’utilisateur depuis la base de données
+- Authentifier l’utilisateur dans le contexte de Spring Security
+
+### 🔧 Composant ajouté
+
+#### ✅ `JwtAuthenticationFilter.java` (dans le package `config`)
+- Extends `OncePerRequestFilter` pour garantir une exécution unique par requête
+- Vérifie la présence d’un header `Authorization: Bearer <token>`
+- Utilise le `JwtService` pour extraire et valider le token
+- Charge l’utilisateur depuis la BD avec `UserRepository`
+- Authentifie l’utilisateur dans Spring Security (`SecurityContextHolder`)
+
+---
+
+### 🧱 Modifications complémentaires
+
+- ✅ `User.java` modifié pour implémenter `UserDetails`
+  - Ajout de la méthode `getAuthorities()` pour retourner le rôle
+- ✅ `UserRepository` : ajout de la méthode `findByEmail(String email)`
+- ✅ `JwtService` : ajout de `isTokenValid(String token, UserDetails userDetails)`
+
 
