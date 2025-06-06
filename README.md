@@ -341,3 +341,25 @@ Dans un package dto :
 - AuthResponse.java : contient un champ token (JWT)
 
 ✅ Ces classes permettent de structurer les requêtes et réponses pour les endpoints /register et /login.
+
+
+#### 🔸 3. Création des Services JWT et Auth
+
+Cette étape met en place le cœur du système d’authentification basé sur **JWT**. Elle permet de :
+- Générer un token sécurisé lors de l’inscription ou de la connexion
+- Vérifier la validité d’un token (signature, expiration, correspondance avec l’utilisateur)
+
+### 🔧 Composants ajoutés
+
+#### ✅ `JwtService.java`
+- Génère un **JSON Web Token (JWT)** signé pour un utilisateur
+- Extrait l'identité (username) à partir d’un token
+- Vérifie l’expiration et la validité du token
+- Utilise une **clé secrète HMAC-SHA256** codée en dur pour la signature (à externaliser plus tard dans les propriétés)
+
+#### ✅ `AuthService.java`
+- Contient la logique métier pour :
+  - **Inscription** : encode le mot de passe, sauvegarde l’utilisateur, génère un JWT
+  - **Connexion** : vérifie le mot de passe, retourne un JWT
+- Utilise `PasswordEncoder` pour encoder les mots de passe
+- Retourne un objet `AuthResponse` contenant le JWT
