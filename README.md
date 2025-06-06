@@ -405,9 +405,8 @@ Configurer la sécurité de l’application pour :
 - Fournit un bean `PasswordEncoder` pour encoder les mots de passe
 - Fournit un bean `AuthenticationManager` nécessaire pour l’authentification dans le service
 
----
 
-#### 🔸 5. Création du filtre JWT
+#### 🔸 6. Création du filtre JWT
 
 Ajouter un filtre personnalisé pour :
 - Intercepter chaque requête HTTP
@@ -425,7 +424,6 @@ Ajouter un filtre personnalisé pour :
 - Charge l’utilisateur depuis la BD avec `UserRepository`
 - Authentifie l’utilisateur dans Spring Security (`SecurityContextHolder`)
 
----
 
 ### 🧱 Modifications complémentaires
 
@@ -433,5 +431,36 @@ Ajouter un filtre personnalisé pour :
   - Ajout de la méthode `getAuthorities()` pour retourner le rôle
 - ✅ `UserRepository` : ajout de la méthode `findByEmail(String email)`
 - ✅ `JwtService` : ajout de `isTokenValid(String token, UserDetails userDetails)`
+
+---
+
+#### 🔸 7. Configuration de la sécurité avec le filtre JWT
+
+Configurer le système de sécurité de Spring pour :
+- Autoriser l’accès anonyme aux routes `/api/auth/**` (inscription, connexion)
+- Protéger toutes les autres routes
+- Ajouter le filtre `JwtAuthenticationFilter` dans la chaîne de filtres
+- Utiliser une authentification stateless (sans session)
+- Intégrer `UserService` comme gestionnaire d’utilisateurs via l’interface `UserDetailsService`
+
+---
+
+### 🔧 Composants modifiés
+
+#### ✅ `SecurityConfig.java` (package `config`)
+- Configuration via `SecurityFilterChain`
+- Désactivation de CSRF
+- Définition des règles d'accès :
+  - `/api/auth/**` : accès libre (public)
+  - toutes les autres routes : authentification requise
+- Ajout du filtre JWT avec `addFilterBefore(...)` avant `UsernamePasswordAuthenticationFilter`
+- Session stateless via `SessionCreationPolicy.STATELESS`
+- Définition de l'`AuthenticationProvider` utilisant :
+  - `UserService` comme `UserDetailsService`
+  - `BCryptPasswordEncoder` comme encodeur de mot de passe
+
+#### ✅ `UserService.java` (package `service`)
+- Ajout de `implements UserDetailsService`
+
 
 
