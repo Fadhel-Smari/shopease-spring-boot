@@ -301,7 +301,7 @@ POST /api/products
 
 ---
 
-## 🔐 Module d’authentification (début)
+## 🔐 Module d’authentification
 
 Ce module permet la gestion des utilisateurs avec rôles (CLIENT ou ADMIN), l’inscription, la connexion, et la future génération de **JWT** pour sécuriser les accès aux API.
 
@@ -462,5 +462,54 @@ Configurer le système de sécurité de Spring pour :
 #### ✅ `UserService.java` (package `service`)
 - Ajout de `implements UserDetailsService`
 
+---
 
+#### 🔸 8. Ajustements sur le module Authentification (attributs utilisateur)
+
+### 🎯 Objectif
+
+Adapter l’entité `User`, les DTOs d’authentification et les services associés pour :
+
+- Gérer **plus d’informations utilisateur** (nom, prénom)
+- Utiliser **le username d'utilisateur comme identifiant principal** à la place de l'email
+- Harmoniser **le `RegisterRequest` avec les attributs de l’entité**
+
+---
+
+### 🔧 Modifications réalisées
+
+#### ✅ `User.java` (package `entity`)
+- Ajout des champs :
+```java
+private String firstname;
+private String lastname;
+private Role role; // Enum {ADMIN, CLIENT}
+```
+- Ajout des getters/setters correspondants
+
+#### ✅ RegisterRequest.java (package dto)
+Ajout de :
+
+```java
+private String firstname;
+private String lastname;
+private String email;
+```
+#### ✅ LoginRequest.java
+Utilisation de username (et non email) comme identifiant
+
+#### ✅ AuthService.java
+Dans la méthode register, ajout de l’initialisation des nouveaux champs :
+
+```java
+user.setFirstname(request.getFirstname());
+user.setLastname(request.getLastname());
+user.setEmail(request.getEmail());
+```
+#### ✅ JwtAuthenticationFilter.java
+Recherche de l'utilisateur par username au lieu de email :
+
+```java
+userRepository.findByUsername(username)
+```
 
