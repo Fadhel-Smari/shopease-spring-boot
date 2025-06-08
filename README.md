@@ -512,4 +512,81 @@ Recherche de l'utilisateur par username au lieu de email :
 ```java
 userRepository.findByUsername(username)
 ```
+---
+
+## 🧪 Tests – Authentification via Postman
+
+### 📌 Objectif
+Tester les routes principales d’authentification :
+- `/api/auth/register` : inscription
+- `/api/auth/login` : connexion
+- Accès à une route protégée avec un token JWT
+
+
+### 1️⃣ Inscription (POST /api/auth/register)
+
+**URL :**
+```bash
+POST http://localhost:8080/api/auth/register
+```
+**Body (JSON) :**
+```json
+{
+  "firstname": "Fadhel",
+  "lastname": "Smari",
+  "username": "fadhel123",
+  "email": "fadhel@example.com",
+  "password": "123456",
+  "role": "CLIENT"
+}
+```
+
+**Réponse :**
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYWRoZWwxMjMiLCJpYXQiOjE3NDk0MDQyNjEsImV4cCI6MTc0OTQ5MDY2MX0.EikfjsVUHDtjPQAUou-EvdIXP_jRS8evpdQ-agVtVhw"
+}
+```
+
+### 2️⃣ Connexion (POST /api/auth/login)
+**URL :**
+```bash
+POST http://localhost:8080/api/auth/login
+```
+**Body (JSON) :**
+
+```json
+{
+  "username": "fadhel123",
+  "password": "123456"
+}
+```
+**Réponse :**
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYWRoZWwxMjMiLCJpYXQiOjE3NDk0MDQyNzEsImV4cCI6MTc0OTQ5MDY3MX0.eaO2jJwvUTVfcEx7XyYU25AgIRhyqjAi45TxgQUbvSo"
+}
+```
+### 3️⃣ Accès à une route protégée (GET /api/users par exemple)
+**URL :**
+
+```bash
+GET http://localhost:8080/api/users
+```
+**Headers :**
+
+```makefile
+Authorization: Bearer <token>
+```
+✅ Remplace <token> par le token obtenu lors du login.
+
+**Résultat attendu :**
+
+Si le token est valide → accès autorisé.
+
+Sinon → réponse 403 (forbidden) ou 401 (unauthorized).
+
+➡️ Ces tests permettent de valider le fonctionnement complet du module d’authentification basé sur JWT.
+
+
 
